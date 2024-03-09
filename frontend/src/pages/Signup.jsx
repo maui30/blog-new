@@ -36,7 +36,7 @@ const Signup = () => {
       console.log(data.message);
 
       if (res.ok) {
-        navigate("/");
+        navigate("/singin");
       }
     } catch (err) {
       setErrMsg(err.message);

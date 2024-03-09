@@ -12,7 +12,7 @@ const signIn = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email });
 
-  if (!user) return res.status(400).json({ message: "Email does not exist" });
+  if (!user) return res.status(404).json({ message: "Email does not exist" });
 
   const match = await bcrypt.compare(password, user.password);
 

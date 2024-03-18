@@ -46,6 +46,7 @@ const DashSidebar = () => {
               icon={HiUser}
               label={"User"}
               labelColor="dark"
+              as={"div"}
             >
               Profile
             </Sidebar.Item>
@@ -55,6 +56,7 @@ const DashSidebar = () => {
             icon={HiLogout}
             labelColor="dark"
             onClick={handleSignOut}
+            className="cursor-pointer"
           >
             Sign Out
           </Sidebar.Item>

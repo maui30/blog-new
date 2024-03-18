@@ -10,4 +10,6 @@ router
 router.route("/:userId").put(usersController.updateUser);
 router.route("/delete/:userId").delete(usersController.deleteUser);
 
+router.route("/signout").post(usersController.signOut);
+
 module.exports = router;

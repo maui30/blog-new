@@ -101,4 +101,11 @@ const deleteUser = asyncHandler(async (req, res) => {
   res.json(reply);
 });
 
-module.exports = { getAllUsers, createUser, updateUser, deleteUser };
+const signOut = asyncHandler(async (req, res) => {
+  res
+    .status(200)
+    .clearCookie("access_token")
+    .json({ message: "User has been signed out" });
+});
+
+module.exports = { getAllUsers, createUser, updateUser, deleteUser, signOut };

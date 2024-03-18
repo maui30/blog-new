@@ -110,7 +110,7 @@ const Signin = () => {
         </button>
       </form>
       <div className="max-w-sm mx-auto mt-7">
-        <Link to="/Signup">
+        <Link to="/SignUp">
           <p>Don't have an Account? Create One</p>
         </Link>
       </div>

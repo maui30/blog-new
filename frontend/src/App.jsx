@@ -7,6 +7,7 @@ import About from "./pages/About";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -18,7 +19,10 @@ function App() {
         <Route path="/Contact" element={<Contact />} />
         <Route path="/SignUp" element={<Signup />} />
         <Route path="/SignIn" element={<Signin />} />
-        <Route path="/Dashboard" element={<Dashboard />} />
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/Dashboard" element={<Dashboard />} />
+        </Route>
       </Routes>
     </>
   );

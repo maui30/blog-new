@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -36,7 +36,7 @@ const Signup = () => {
       console.log(data.message);
 
       if (res.ok) {
-        navigate("/singin");
+        navigate("/Signin");
       }
     } catch (err) {
       setErrMsg(err.message);
@@ -46,45 +46,66 @@ const Signup = () => {
 
   return (
     <>
-      <div>
-        <h1>Signup</h1>
-      </div>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="username">Username: </label>
+      <form className="max-w-sm mx-auto mt-7" onSubmit={handleSubmit}>
+        <div className="mb-5">
+          <label
+            htmlFor="username"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Your Username
+          </label>
           <input
-            className="border-2"
-            type="text"
-            name="username"
+            type="username"
+            id="username"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             value={username}
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
+            onChange={(e) => setUsername(e.target.value)}
+            required
           />
-          <label htmlFor="email">Email:</label>
+        </div>
+        <div className="mb-5">
+          <label
+            htmlFor="email"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Your email
+          </label>
           <input
-            className="border-2"
-            type="text"
-            name="email"
+            type="email"
+            id="email"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
+            onChange={(e) => setEmail(e.target.value)}
+            required
           />
-
-          <label htmlFor="password">Password:</label>
+        </div>
+        <div className="mb-5">
+          <label
+            htmlFor="password"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Your password
+          </label>
           <input
-            className="border-2"
-            type="text"
-            name="password"
+            type="password"
+            id="password"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
-          <p>{errMsg}</p>
-          <button type="submit">Submit</button>
-        </form>
+        </div>
+        <button
+          type="submit"
+          className="text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Submit
+        </button>
+      </form>
+      <div className="max-w-sm mx-auto mt-7">
+        <Link to="/Signin">
+          <p>Already have an Account? Sign In</p>
+        </Link>
       </div>
     </>
   );

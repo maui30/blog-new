@@ -54,10 +54,10 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 
   if (username) {
-    if (username.length < 7 || username > 20)
+    if (username.length < 3 || username > 20)
       return res
         .status(400)
-        .json({ message: "Username must be between 7 and 20 characters long" });
+        .json({ message: "Username must be between 3 and 20 characters long" });
 
     if (username.includes(" "))
       return res.status(400).json({ message: "username cannot include space" });
@@ -81,7 +81,9 @@ const updateUser = asyncHandler(async (req, res) => {
     { new: true }
   );
   const { password, ...rest } = updatedUser._doc;
-  res.status(200).json({ message: `${rest.username} successfully updated` });
+  res
+    .status(200)
+    .json({ ...rest, message: `${rest.username} successfully updated` });
 });
 
 const deleteUser = asyncHandler(async (req, res) => {

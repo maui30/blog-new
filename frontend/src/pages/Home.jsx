@@ -1,15 +1,17 @@
 import React from "react";
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <div className="mx-10 my-8">
       <div className="text-center flex flex-col justify-center items-center">
-        <h1 class="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
+        <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
           Welcome to the Blog Site
         </h1>
-        <p class="mb-6 text-md font-normal text-gray-500 lg:text-lg sm:px-16 xl:px-48 dark:text-gray-400">
+        <p className="mb-6 text-md font-normal text-gray-500 lg:text-lg sm:px-16 xl:px-48 dark:text-gray-400">
           Explore a diverse collection of stories, insights, and experiences
           shared by individuals from all walks of life. Join our vibrant
           community of writers and readers on a journey of discovery,
@@ -18,18 +20,21 @@ const Home = () => {
           uncover new perspectives, you're invited to be part of our collective
           narrative.
         </p>
-        <div className="items-center">
-          <Link to="/SignUp">
-            <Button
-              outline
-              gradientDuoTone="pinkToOrange"
-              pill
-              className="w-48"
-            >
-              Sign Up
-            </Button>
-          </Link>
-        </div>
+
+        {!currentUser && (
+          <div className="items-center">
+            <Link to="/SignUp">
+              <Button
+                outline
+                gradientDuoTone="pinkToOrange"
+                pill
+                className="w-48"
+              >
+                Sign Up
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const usersController = require("../controller/usersController");
+const verifyJWT = require("../utils/verifyJWT");
 
 router
   .route("/")
-  .get(usersController.getAllUsers)
+  .get(verifyJWT, usersController.getAllUsers)
   .post(usersController.createUser);
 
 router.route("/:userId").put(usersController.updateUser);

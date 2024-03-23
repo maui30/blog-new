@@ -21,7 +21,7 @@ const Home = () => {
           narrative.
         </p>
 
-        {!currentUser && (
+        {!currentUser ? (
           <div className="items-center">
             <Link to="/SignUp">
               <Button
@@ -31,6 +31,19 @@ const Home = () => {
                 className="w-48"
               >
                 Sign Up
+              </Button>
+            </Link>
+          </div>
+        ) : (
+          <div className="items-center">
+            <Link to="/Create-Post">
+              <Button
+                outline
+                gradientDuoTone="pinkToOrange"
+                pill
+                className="w-48"
+              >
+                Create a Post
               </Button>
             </Link>
           </div>

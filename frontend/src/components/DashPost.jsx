@@ -7,6 +7,7 @@ const DashPost = () => {
   const { currentUser } = useSelector((state) => state.user);
 
   const [userPosts, setUserPosts] = useState([]);
+  const [showMore, setShowMore] = useState(true);
 
   console.log(userPosts);
 
@@ -21,6 +22,9 @@ const DashPost = () => {
 
         if (res.ok) {
           setUserPosts(data.posts);
+          if (data.posts.length < 9) {
+            setShowMore(false);
+          }
         }
       } catch (err) {
         console.log(err);
@@ -31,6 +35,27 @@ const DashPost = () => {
       fetchPosts();
     }
   }, [currentUser._id]);
+
+  const handleShowMore = async () => {
+    const startIndex = userPosts.length;
+
+    try {
+      const res = await fetch(
+        `/api/posts/getPosts?userId=${currentUser._id}&startIndex=${startIndex}`
+      );
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setUserPosts((prev) => [...prev, ...data.posts]);
+        if (data.posts.length < 9) {
+          setShowMore(false);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar">
@@ -58,13 +83,19 @@ const DashPost = () => {
                     <img className="h-10 w-20" src={post.image} />
                   </Table.Cell>
                 </Link>
-                <Table.Cell>{post.title}</Table.Cell>
+
+                <Table.Cell className="font-medium">
+                  <Link to={`/Post/${post.slug}`}>{post.title} </Link>
+                </Table.Cell>
+
                 <Table.Cell>{post.category}</Table.Cell>
+
                 <Table.Cell>
                   <span className="font-medium text-red-500 hover:underline cursor-pointer">
                     Delete
                   </span>
                 </Table.Cell>
+
                 <Table.Cell>
                   <Link to={`/Update-Post/${post._id}`}>
                     <span className="text-teal-500 hover:underline">Edit</span>
@@ -73,6 +104,15 @@ const DashPost = () => {
               </Table.Body>
             ))}
           </Table>
+
+          {showMore && (
+            <button
+              className="w-full self-center py-4 text-orange-500 hover:underline"
+              onClick={handleShowMore}
+            >
+              Show More
+            </button>
+          )}
         </>
       ) : (
         <h2>No Posts</h2>

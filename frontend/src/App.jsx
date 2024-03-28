@@ -9,6 +9,8 @@ import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import CreatePost from "./pages/CreatePost";
+import Post from "./pages/Post";
+import PostPage from "./pages/PostPage";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/Contact" element={<Contact />} />
         <Route path="/SignUp" element={<Signup />} />
         <Route path="/SignIn" element={<Signin />} />
+        <Route path="/Post/:post-slug" element={<PostPage />} />
+        <Route path="/Post" element={<Post />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="/Dashboard" element={<Dashboard />} />

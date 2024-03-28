@@ -48,7 +48,7 @@ const getPosts = asyncHandler(async (req, res) => {
       ],
     }),
   })
-    .sort({ updateAt: sortDirection })
+    .sort({ updatedAt: sortDirection })
     .skip(startIndex)
     .limit(limit);
 
@@ -69,4 +69,17 @@ const getPosts = asyncHandler(async (req, res) => {
   res.status(200).json({ posts, totalPosts, countLastMonthPosts });
 });
 
-module.exports = { createPost, getPosts };
+const deletePost = asyncHandler(async (req, res) => {
+  if (req.user.id !== req.params.userId)
+    return res
+      .status(400)
+      .json({ message: "You are not allowed to delete this post" });
+
+  const post = await Post.findById(req.params.postId);
+
+  await post.deleteOne();
+
+  res.status(200).json({ message: "Post deleted Successfully" });
+});
+
+module.exports = { createPost, getPosts, deletePost };

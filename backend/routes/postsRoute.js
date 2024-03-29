@@ -10,4 +10,7 @@ router.route("/getPosts").get(postController.getPosts);
 router
   .route("/deletePost/:userId/:postId")
   .delete(verifyJWT, postController.deletePost);
+
+router.route("/updatePost/:postId").put(verifyJWT, postController.updatePost);
+
 module.exports = router;

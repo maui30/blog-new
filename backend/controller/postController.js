@@ -82,4 +82,31 @@ const deletePost = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Post deleted Successfully" });
 });
 
-module.exports = { createPost, getPosts, deletePost };
+const updatePost = asyncHandler(async (req, res) => {
+  const { title, content, image, category } = req.body;
+
+  const slug = title
+    .split(" ")
+    .join("-")
+    .replace(/[^a-zA-Z0-9-]/g, "");
+
+  const updatePost = await Post.findByIdAndUpdate(
+    req.params.postId,
+    {
+      $set: {
+        title,
+        image,
+        content,
+        category,
+        slug,
+      },
+    },
+    { new: true }
+  );
+
+  res
+    .status(200)
+    .json({ ...updatePost._doc, message: "Post Updated Successfully" });
+});
+
+module.exports = { createPost, getPosts, deletePost, updatePost };

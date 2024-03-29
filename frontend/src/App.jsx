@@ -11,6 +11,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import CreatePost from "./pages/CreatePost";
 import Post from "./pages/Post";
 import PostPage from "./pages/PostPage";
+import UpdatePost from "./pages/UpdatePost";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Create-Post" element={<CreatePost />} />
+          <Route path="/Update-Post/:postId" element={<UpdatePost />} />
         </Route>
       </Routes>
     </>

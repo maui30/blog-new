@@ -63,7 +63,7 @@ const DashPost = () => {
     setOpenModal(false);
     try {
       const res = await fetch(
-        `/api/posts/deletePost/${currentUser._id}/${delPostId}`,
+        `api/posts/deletePost/${currentUser._id}/${delPostId}`,
         {
           method: "DELETE",
         }
@@ -104,12 +104,12 @@ const DashPost = () => {
                 </Table.Cell>
 
                 <Link to={`/Post/${post.slug}`}>
-                  <Table.Cell>
+                  <Table.Cell as={"div"}>
                     <img className="h-10 w-20" src={post.image} />
                   </Table.Cell>
                 </Link>
 
-                <Table.Cell className="font-medium">
+                <Table.Cell className="font-medium" as={"div"}>
                   <Link to={`/Post/${post.slug}`}>{post.title} </Link>
                 </Table.Cell>
 

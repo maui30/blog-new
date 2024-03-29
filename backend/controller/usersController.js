@@ -6,11 +6,41 @@ const bcrypt = require("bcrypt");
 const getAllUsers = asyncHandler(async (req, res) => {
   //select does not return the password
   //lean will let mongoose give us data json
-  const users = await Users.find().select("-password").lean();
+  //const users = await Users.find().select("-password").lean();
+  if (!req.user.isAdmin)
+    return res.status(401).json({ message: "Unauthorized" });
+
+  const startIndex = req.query.startIndex || 0;
+  const limit = req.query.limit || 9;
+  const sortDirection = req.query.sort === "asc" ? 1 : -1;
+
+  const users = await Users.find()
+    .sort({ createdAt: sortDirection })
+    .skip(startIndex)
+    .limit(limit);
 
   if (!users?.length) return res.status(400).json({ message: "No Users" });
 
-  res.json(users);
+  const userWithoutPass = users.map((user) => {
+    const { password, ...rest } = user._doc;
+    return rest;
+  });
+
+  const totalUsers = await Users.countDocuments();
+
+  const now = new Date();
+
+  const oneMonthAgo = new Date(
+    now.getFullYear(),
+    now.getMonth() - 1,
+    now.getDate()
+  );
+
+  const lastMonthUsers = await Users.countDocuments({
+    createAt: { $gte: oneMonthAgo },
+  });
+
+  res.status(200).json({ users: userWithoutPass, totalUsers, lastMonthUsers });
 });
 
 const createUser = asyncHandler(async (req, res) => {

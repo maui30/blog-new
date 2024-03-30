@@ -35,7 +35,7 @@ const PostPage = () => {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <main className="flex flex-col max-w-6xl mx-auto min-h-screen">
+    <main className="flex flex-col max-w-6xl mx-auto min-h-screen ">
       <h1 className="text-3xl text-center mt-10 font-serif max-w-2xl  mx-auto lg:text-4xl">
         {post.title}
       </h1>

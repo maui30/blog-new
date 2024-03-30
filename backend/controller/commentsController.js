@@ -18,4 +18,12 @@ const createComment = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { createComment };
+const getComments = asyncHandler(async (req, res) => {
+  const comments = await Comment.find({ postId: req.params.postId }).sort({
+    createdAt: -1,
+  });
+
+  res.status(200).json(comments);
+});
+
+module.exports = { createComment, getComments };

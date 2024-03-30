@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "flowbite-react";
+import CommentSection from "../components/CommentSection";
 
 const PostPage = () => {
   const { postSlug } = useParams();
@@ -18,10 +19,8 @@ const PostPage = () => {
 
         if (res.ok) {
           setLoading(false);
-          console.log(data.posts[0]);
           setPost(data.posts[0]);
         } else {
-          console.log(data.message);
           setLoading(false);
         }
       } catch (err) {
@@ -63,6 +62,8 @@ const PostPage = () => {
         className="p-3 max-w-2xl w-full mx-auto post-content"
         dangerouslySetInnerHTML={{ __html: post.content }}
       ></div>
+
+      <CommentSection postId={post._id} />
     </main>
   );
 };

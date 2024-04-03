@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import { handle } from "express/lib/router";
 
-const Comment = ({ comment, onLike, onEdit }) => {
+const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   const [user, setUser] = useState({});
   const [isEdit, setIsEdit] = useState(false);
   const [editedContent, setEditedContent] = useState(comment.content);
@@ -120,13 +120,22 @@ const Comment = ({ comment, onLike, onEdit }) => {
                     (comment.numberOfLikes === 1 ? " like" : " likes")}
               </p>
               {comment.userId === currentUser?._id && (
-                <button
-                  type="button"
-                  className="text-gray-400 text-sm hover:text-blue-400"
-                  onClick={handleEdit}
-                >
-                  Edit
-                </button>
+                <>
+                  <button
+                    type="button"
+                    className="text-gray-400 text-sm hover:text-blue-400"
+                    onClick={handleEdit}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    className="text-gray-400 text-sm hover:text-blue-400"
+                    onClick={() => onDelete(comment._id)}
+                  >
+                    Delete
+                  </button>
+                </>
               )}
             </div>
           </>

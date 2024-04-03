@@ -13,4 +13,8 @@ router
   .route("/editComment/:commentId")
   .put(verifyJWT, commentController.editComment);
 
+router
+  .route("/deleteComment/:commentId")
+  .delete(verifyJWT, commentController.deleteComment);
+
 module.exports = router;

@@ -26,4 +26,26 @@ const getComments = asyncHandler(async (req, res) => {
   res.status(200).json(comments);
 });
 
-module.exports = { createComment, getComments };
+const likeComment = asyncHandler(async (req, res) => {
+  const comment = await Comment.findById(req.params.commentId);
+  const id = req.user.id;
+
+  if (!comment) return res.status(400).json({ message: "No comment" });
+
+  //check if user already liked the comment
+  const userLiked = comment.likes.indexOf(id);
+
+  if (userLiked === -1) {
+    comment.likes.push(id);
+    comment.numberOfLikes += 1;
+  } else {
+    comment.likes.splice(id, 1);
+    comment.numberOfLikes -= 1;
+  }
+
+  await comment.save();
+
+  res.status(200).json(comment);
+});
+
+module.exports = { createComment, getComments, likeComment };

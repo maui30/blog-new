@@ -1,11 +1,17 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Textarea, Button } from "flowbite-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import Comment from "./Comment";
 
 const CommentSection = ({ postId }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
+
+  const [comments, setComments] = useState([]);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +35,52 @@ const CommentSection = ({ postId }) => {
         console.log(data);
       } else {
         console.log(data.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const res = await fetch(`/api/comments/getComments/${postId}`);
+
+        if (res.ok) {
+          const data = await res.json();
+          setComments(data);
+        } else {
+          console.log("Not");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchComments();
+  }, [postId]);
+
+  const handleLike = async (commentId) => {
+    try {
+      if (!currentUser) navigate("/Signin");
+
+      const res = await fetch(`/api/comments/likeComment/${commentId}`, {
+        method: "PUT",
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setComments(
+          comments.map((comment) =>
+            comment._id === commentId
+              ? {
+                  ...comment,
+                  likes: data.likes,
+                  numberOfLikes: data.likes.length,
+                }
+              : comment
+          )
+        );
       }
     } catch (err) {
       console.log(err);
@@ -81,6 +133,24 @@ const CommentSection = ({ postId }) => {
             </Button>
           </div>
         </form>
+      )}
+
+      {comments.length !== 0 ? (
+        <>
+          <div className="flex gap-2 my-3 items-center">
+            <p className="font-medium ">Comments</p>
+            <div className="border border-gray-300 py-1 px-2 rounded-sm">
+              <p>{comments.length}</p>
+            </div>
+          </div>
+          {comments.map((comm) => (
+            <Comment key={comm._id} comment={comm} onLike={handleLike} />
+          ))}
+        </>
+      ) : (
+        <div>
+          <p className="text-sm my-5">There are no comments.</p>
+        </div>
       )}
     </div>
   );

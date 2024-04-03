@@ -140,4 +140,21 @@ const signOut = asyncHandler(async (req, res) => {
     .json({ message: "User has been signed out" });
 });
 
-module.exports = { getAllUsers, createUser, updateUser, deleteUser, signOut };
+const getUser = asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+
+  const user = await Users.findById(userId);
+
+  const { password, ...rest } = await user._doc;
+
+  res.status(200).json(rest);
+});
+
+module.exports = {
+  getAllUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+  signOut,
+  getUser,
+};

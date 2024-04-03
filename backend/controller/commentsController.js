@@ -48,4 +48,30 @@ const likeComment = asyncHandler(async (req, res) => {
   res.status(200).json(comment);
 });
 
-module.exports = { createComment, getComments, likeComment };
+const editComment = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const comment = await Comment.findById(req.params.commentId);
+
+  if (!comment) return res.status(400).json({ message: "No Comment" });
+
+  if (id !== comment.userId)
+    return res.status(403).json({ message: "Not allowed to edit" });
+
+  const updateComment = await Comment.findByIdAndUpdate(
+    req.params.commentId,
+    {
+      $set: {
+        content: req.body.content,
+      },
+    },
+    { new: true }
+  );
+
+  res.status(200).json({
+    ...updateComment._doc,
+    message: "Comment Updated",
+  });
+});
+
+module.exports = { createComment, getComments, likeComment, editComment };

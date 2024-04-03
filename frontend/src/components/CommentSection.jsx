@@ -31,6 +31,7 @@ const CommentSection = ({ postId }) => {
       const data = await res.json();
 
       if (res.ok) {
+        setComments([...comments, data]);
         setComment("");
         console.log(data);
       } else {
@@ -85,6 +86,14 @@ const CommentSection = ({ postId }) => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleEdit = (comment, editComment) => {
+    setComments(
+      comments.map((com) =>
+        com._id === comment._id ? { ...com, content: editComment } : com
+      )
+    );
   };
 
   return (
@@ -144,7 +153,12 @@ const CommentSection = ({ postId }) => {
             </div>
           </div>
           {comments.map((comm) => (
-            <Comment key={comm._id} comment={comm} onLike={handleLike} />
+            <Comment
+              key={comm._id}
+              comment={comm}
+              onLike={handleLike}
+              onEdit={handleEdit}
+            />
           ))}
         </>
       ) : (

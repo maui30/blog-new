@@ -9,4 +9,8 @@ router
   .route("/likeComment/:commentId")
   .put(verifyJWT, commentController.likeComment);
 
+router
+  .route("/editComment/:commentId")
+  .put(verifyJWT, commentController.editComment);
+
 module.exports = router;

@@ -59,6 +59,19 @@ const DashSidebar = () => {
           </Link>
 
           {currentUser.isAdmin && (
+            <Link to="/Dashboard?tab=dash">
+              <Sidebar.Item
+                active={tab === "dash"}
+                icon={HiOutlineUserGroup}
+                labelColor="dark"
+                as={"div"}
+              >
+                Dashboard
+              </Sidebar.Item>
+            </Link>
+          )}
+
+          {currentUser.isAdmin && (
             <Link to="/Dashboard?tab=users">
               <Sidebar.Item
                 active={tab === "users"}

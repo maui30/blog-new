@@ -17,4 +17,8 @@ router
   .route("/deleteComment/:commentId")
   .delete(verifyJWT, commentController.deleteComment);
 
+router
+  .route("/getAllComments")
+  .get(verifyJWT, commentController.getAllComments);
+
 module.exports = router;

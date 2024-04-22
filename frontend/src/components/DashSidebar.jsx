@@ -82,6 +82,19 @@ const DashSidebar = () => {
             </Sidebar.Item>
           </Link>
 
+          {currentUser.isAdmin && (
+            <Link to="/Dashboard?tab=comments">
+              <Sidebar.Item
+                active={tab === "comments"}
+                icon={HiDocumentText}
+                labelColor="dark"
+                as={"div"}
+              >
+                Comments
+              </Sidebar.Item>
+            </Link>
+          )}
+
           <Sidebar.Item
             icon={HiLogout}
             labelColor="dark"

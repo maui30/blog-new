@@ -106,7 +106,7 @@ const DashboardComponent = () => {
           <div className="flex justify-between p-3 text-sm font-semibold">
             <h1 className="text-center p-2">Recent Posts</h1>
             <Button outline gradientDuoTone="pinkToOrange" pill>
-              <Link to="/dashboard?tab=users">See All</Link>
+              <Link to="/dashboard?tab=posts">See All</Link>
             </Button>
           </div>
 
@@ -141,7 +141,7 @@ const DashboardComponent = () => {
           <div className="flex justify-between p-3 text-sm font-semibold">
             <h1 className="text-center p-2">Recent Comments</h1>
             <Button outline gradientDuoTone="pinkToOrange" pill>
-              <Link to="/dashboard?tab=users">See All</Link>
+              <Link to="/dashboard?tab=comments">See All</Link>
             </Button>
           </div>
 

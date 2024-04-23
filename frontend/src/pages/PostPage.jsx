@@ -59,10 +59,7 @@ const PostPage = () => {
         {post.title}
       </h1>
 
-      <Link
-        to={`/search?category=${post.category}`}
-        className="self-center mt-5"
-      >
+      <Link to={`/Post?category=${post.category}`} className="self-center mt-5">
         <Button pill color="gray" size="xs">
           {post.category}
         </Button>

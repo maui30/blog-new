@@ -1,6 +1,6 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { Navbar, TextInput, Button, Dropdown, Avatar } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useSelector, useDispatch } from "react-redux";
 import { signOutSuccess } from "../redux/users/userSlice";
@@ -10,6 +10,28 @@ const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const location = useLocation();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const searchFromUrl = urlParams.get("searchTerm");
+
+    if (searchFromUrl) setSearchTerm(searchFromUrl);
+  }, [location.search]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("searchTerm", searchTerm);
+
+    const searchQuery = urlParams.toString();
+
+    navigate(`/Post?${searchQuery}`);
+  };
 
   const handleSignOut = async () => {
     try {
@@ -37,10 +59,12 @@ const Header = () => {
           </span>
         </Link>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <TextInput
             type="text"
             placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             rightIcon={AiOutlineSearch}
             className="hidden lg:inline"
           />
@@ -99,9 +123,6 @@ const Header = () => {
           </Navbar.Link>
           <Navbar.Link active={path === "/About"} as={"div"}>
             <Link to="/About">About</Link>
-          </Navbar.Link>
-          <Navbar.Link active={path === "/Contact"} as={"div"}>
-            <Link to="/Contact">Contact</Link>
           </Navbar.Link>
           <Navbar.Link active={path === "/Post"} as={"div"}>
             <Link to="/Post">Post</Link>

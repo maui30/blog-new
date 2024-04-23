@@ -128,7 +128,7 @@ const CreatePost = () => {
           />
           <Select onChange={(e) => setCategory(e.target.value)}>
             <option value="uncategorized">Select a Catergoryy</option>
-            <option value="JavaScript">Entertainment</option>
+            <option value="Entertainment">Entertainment</option>
             <option value="Programming">Programming</option>
             <option value="Life">Life</option>
             <option value="others">Others</option>

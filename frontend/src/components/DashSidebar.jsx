@@ -91,7 +91,7 @@ const DashSidebar = () => {
               labelColor="dark"
               as={"div"}
             >
-              Posts
+              Your Posts
             </Sidebar.Item>
           </Link>
 

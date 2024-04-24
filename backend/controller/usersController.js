@@ -92,28 +92,51 @@ const updateUser = asyncHandler(async (req, res) => {
     if (username.includes(" "))
       return res.status(400).json({ message: "username cannot include space" });
 
-    if (username.match(/^(?=.*[a-zA-Z])(?=.*\d).{6,}$/))
-      return res
-        .status(400)
-        .json({ message: "Username must be letters and numbers only" });
+    // if (username.match(/^(?=.*[a-zA-Z])(?=.*\d).{6,}$/))
+    //   return res
+    //     .status(400)
+    //     .json({ message: "Username must be letters and numbers only" });
   }
 
-  const updatedUser = await Users.findByIdAndUpdate(
-    req.params.userId,
-    {
-      $set: {
-        username,
-        email,
-        profilePicture,
-        password: req.body.password,
+  if (!req.body.password) {
+    const updatedUser = await Users.findByIdAndUpdate(
+      req.params.userId,
+      {
+        $set: {
+          username,
+          email,
+          profilePicture,
+        },
       },
-    },
-    { new: true }
-  );
-  const { password, ...rest } = updatedUser._doc;
-  res
-    .status(200)
-    .json({ ...rest, message: `${rest.username} successfully updated` });
+      { new: true }
+    );
+
+    const { password, ...rest } = updatedUser._doc;
+    res
+      .status(200)
+      .json({ ...rest, message: `${rest.username} successfully updated` });
+    console.log("without");
+  } else {
+    const hashedpass = await bcrypt.hash(req.body.password, 10);
+    const updatedUser = await Users.findByIdAndUpdate(
+      req.params.userId,
+      {
+        $set: {
+          username,
+          email,
+          profilePicture,
+          password: hashedpass,
+        },
+      },
+      { new: true }
+    );
+
+    const { password, ...rest } = updatedUser._doc;
+    res
+      .status(200)
+      .json({ ...rest, message: `${rest.username} successfully updated` });
+    console.log("withpass");
+  }
 });
 
 const deleteUser = asyncHandler(async (req, res) => {

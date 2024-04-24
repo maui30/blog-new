@@ -26,9 +26,11 @@ import {
 const DashProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
 
+  console.log(currentUser);
+
   const [username, setUsername] = useState(currentUser.username);
   const [email, setEmail] = useState(currentUser.email);
-  const [password, setPassword] = useState(currentUser.password);
+  const [password, setPassword] = useState(null);
   const [profilePicture, setProfilePicture] = useState(
     currentUser.profilePicture
   );
@@ -58,7 +60,6 @@ const DashProfile = () => {
   };
 
   console.log(username);
-  console.log(updateError);
 
   useEffect(() => {
     if (img) {
@@ -115,6 +116,7 @@ const DashProfile = () => {
       });
 
       const data = await res.json();
+      if (data === null) console.log(data);
 
       if (!res.ok) {
         dispatch(updateFail(data.message));

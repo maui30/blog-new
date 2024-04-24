@@ -15,7 +15,6 @@ import {
 import { CircularProgressbar } from "react-circular-progressbar";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { use } from "express/lib/router";
 
 const UpdatePost = () => {
   const [errMsg, setErrMsg] = useState(null);

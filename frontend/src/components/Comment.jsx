@@ -3,7 +3,6 @@ import { FaThumbsUp } from "react-icons/fa";
 import { Button, Textarea } from "flowbite-react";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import { handle } from "express/lib/router";
 
 const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   const [user, setUser] = useState({});

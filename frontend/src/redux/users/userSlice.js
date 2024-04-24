@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { isThisQuarter } from "date-fns";
-
 const initialState = {
   currentUser: null,
   error: null,

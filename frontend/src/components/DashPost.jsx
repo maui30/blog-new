@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Table, Modal, Button } from "flowbite-react";
+import { Table, Modal, Button, Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
@@ -13,8 +13,11 @@ const DashPost = () => {
   const [openModal, setOpenModal] = useState(false);
   const [delPostId, setDelPostId] = useState(null);
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true);
       try {
         const res = await fetch(
           `/api/posts/getPosts?userId=${currentUser._id}`
@@ -23,6 +26,7 @@ const DashPost = () => {
         const data = await res.json();
 
         if (res.ok) {
+          setLoading(false);
           setUserPosts(data.posts);
           if (data.posts.length < 9) {
             setShowMore(false);
@@ -84,7 +88,7 @@ const DashPost = () => {
 
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar">
-      {currentUser && userPosts.length > 0 ? (
+      {currentUser && userPosts.length > 0 && (
         <>
           <Table hoverable>
             <Table.Head>
@@ -175,9 +179,11 @@ const DashPost = () => {
             </button>
           )}
         </>
-      ) : (
-        <h2>No Posts</h2>
       )}
+
+      {loading && <Spinner color="warning" size="xl" />}
+
+      {!loading && !userPosts.length === 0 && <h2>No Posts</h2>}
     </div>
   );
 };

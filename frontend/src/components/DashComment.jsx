@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Table, Modal, Button } from "flowbite-react";
+import { Table, Modal, Button, Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
@@ -11,13 +11,16 @@ const DashComment = () => {
   const [showMore, setShowMore] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [delId, setDelId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchComments = async () => {
+      setLoading(true);
       try {
         const res = await fetch("/api/comments/getAllComments");
 
         if (res.ok) {
+          setLoading(false);
           const data = await res.json();
           setComments(data.comments);
           if (data.comments.length < 9) {
@@ -75,7 +78,7 @@ const DashComment = () => {
 
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar">
-      {comments.length > 0 ? (
+      {comments.length > 0 && (
         <>
           <Table>
             <Table.Head>
@@ -152,9 +155,11 @@ const DashComment = () => {
             </button>
           )}
         </>
-      ) : (
-        <h1>No Comments</h1>
       )}
+
+      {loading && <Spinner color="warning" size="xl" />}
+
+      {!loading && comments.length === 0 && <h2>No Comments.</h2>}
     </div>
   );
 };

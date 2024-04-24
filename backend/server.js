@@ -21,7 +21,7 @@ app.use(cors(corsOption));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/", express.static(path.join(__dirname, "public")));
+app.use("/", express.static(path.join(path.resolve(), "/frontend/dist")));
 
 app.use("/", require("./routes/root"));
 app.use("/api/auth", require("./routes/authRouter"));

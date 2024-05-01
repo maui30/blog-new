@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 const Home = () => {
   const { currentUser } = useSelector((state) => state.user);
   return (
-    <div className="mx-10 my-8">
+    <div className="flex justify-center items-center h-screen">
       <div className="text-center flex flex-col justify-center items-center">
         <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
           Welcome to the Blog Site

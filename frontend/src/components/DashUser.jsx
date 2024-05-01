@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Table, Modal, Button } from "flowbite-react";
+import { Table, Modal, Button, Spinner } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
@@ -10,9 +10,11 @@ const DashUser = () => {
   const [users, setUsers] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [delId, setDelId] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
+      setIsLoading(true);
       try {
         const res = await fetch("api/users");
 
@@ -20,11 +22,14 @@ const DashUser = () => {
 
         if (res.ok) {
           setUsers(data.users);
+          setIsLoading(false);
           console.log(data.users);
         } else {
+          setIsLoading(false);
           console.log(data.message);
         }
       } catch (err) {
+        setIsLoading(false);
         console.log(err);
       }
     };
@@ -102,7 +107,11 @@ const DashUser = () => {
           </Table>
         </>
       ) : (
-        <h2>There are no Users</h2>
+        <>
+          {isLoading && <Spinner color="warning" size="xl" />}
+
+          {!isLoading && users.length === 0 && <h2>No Users</h2>}
+        </>
       )}
 
       <Modal

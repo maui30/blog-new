@@ -111,7 +111,7 @@ const Signin = () => {
       </form>
       <div className="max-w-sm mx-auto mt-7">
         <Link to="/SignUp">
-          <p>Don't have an Account? Create One</p>
+          <p className="text-blue-700 ">Don't have an Account? Create One</p>
         </Link>
       </div>
     </>

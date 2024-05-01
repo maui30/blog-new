@@ -6,12 +6,12 @@ import { useSelector } from "react-redux";
 const Home = () => {
   const { currentUser } = useSelector((state) => state.user);
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="text-center flex flex-col justify-center items-center">
+    <div className="flex justify-center items-center ">
+      <div className="text-center flex flex-col justify-center items-center top-1/4 absolute  md:top-1/3">
         <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-4xl dark:text-white">
           Welcome to the Blog Site
         </h1>
-        <p className="mb-6 text-md font-normal text-gray-500 lg:text-lg sm:px-16 xl:px-48 dark:text-gray-400">
+        <p className="mb-6 text-md font-normal text-gray-500 lg:text-lg px-16 md:px-48 dark:text-gray-400">
           Explore a diverse collection of stories, insights, and experiences
           shared by individuals from all walks of life. Join our vibrant
           community of writers and readers on a journey of discovery,
